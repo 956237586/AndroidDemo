@@ -24,7 +24,7 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         InitHead(R.drawable.a, 350, R.id.text1, R.id.text2, R.id.text3);
-        InitViewPager(0, R.layout.lay1, R.layout.lay2, R.layout.lay3);
+        InitViewPager(1, R.layout.lay1, R.layout.lay2, R.layout.lay3);
     }
 
     /**
@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         imageView = (ImageView) findViewById(R.id.imgView);
         int imgWidth = MyUtil.getImgWidth(this, imgRes);
 
-        int basicOffset = (MyUtil.getScreenWidth(this) / textViews.length - imgWidth) / 2;
+        int basicOffset = Math.abs(MyUtil.getScreenWidth(this) / textViews.length - imgWidth) / 2;
         offset = basicOffset * 2 + imgWidth;
 
         Matrix matrix = new Matrix();
@@ -55,8 +55,8 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
         LayoutInflater mInflater = getLayoutInflater();
         for (int pageLayout : pageLayouts) listViews.add(mInflater.inflate(pageLayout, null));
         viewPager.setAdapter(new MyPagerAdapter(listViews));
-        viewPager.setCurrentItem(defaultPage);
         viewPager.setOnPageChangeListener(this);
+        viewPager.setCurrentItem(defaultPage);
     }
 
     @Override
