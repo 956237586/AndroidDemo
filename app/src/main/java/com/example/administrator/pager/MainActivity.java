@@ -1,11 +1,9 @@
 package com.example.administrator.pager;
 
 import android.app.Activity;
-import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -25,32 +23,22 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        InitTextView(new int[]{R.id.text1, R.id.text2, R.id.text3});
-        InitImageView(R.drawable.a, 350);
-        InitViewPager(new int[]{R.layout.lay1, R.layout.lay2, R.layout.lay3}, 0);
+        InitHead(R.drawable.a, 350, R.id.text1, R.id.text2, R.id.text3);
+        InitViewPager(0, R.layout.lay1, R.layout.lay2, R.layout.lay3);
     }
 
     /**
-     * 初始化头标
+     * 初始化头部
      */
-    private void InitTextView(int[] textViews) {
+    private void InitHead(int imgRes, int animationSpeed, int... textViews) {
+        this.animationSpeed = animationSpeed;
         for (int i = 0; i < textViews.length; i++)
             findViewById(textViews[i]).setOnClickListener(new MyClickListener(i));
-    }
 
-    /**
-     * 初始化动画
-     */
-    private void InitImageView(int imgRes, int animationSpeed) {
-        this.animationSpeed = animationSpeed;
         imageView = (ImageView) findViewById(R.id.imgView);
-        int imgWidth = BitmapFactory.decodeResource(getResources(), imgRes)
-                .getWidth();
+        int imgWidth = MyUtil.getImgWidth(this, imgRes);
 
-        DisplayMetrics dm = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(dm);
-        int screenW = dm.widthPixels;// 获取分辨率宽度
-        int basicOffset = (screenW / 3 - imgWidth) / 2;
+        int basicOffset = (MyUtil.getScreenWidth(this) / textViews.length - imgWidth) / 2;
         offset = basicOffset * 2 + imgWidth;
 
         Matrix matrix = new Matrix();
@@ -61,7 +49,7 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
     /**
      * 初始化ViewPager
      */
-    private void InitViewPager(int[] pageLayouts, int defaultPage) {
+    private void InitViewPager(int defaultPage, int... pageLayouts) {
         viewPager = (ViewPager) findViewById(R.id.pager);
         ArrayList<View> listViews = new ArrayList<>();
         LayoutInflater mInflater = getLayoutInflater();
@@ -77,8 +65,8 @@ public class MainActivity extends Activity implements ViewPager.OnPageChangeList
                 i * offset, 0, 0);
         animation.setFillAfter(true);// True:图片停在动画结束位置
         animation.setDuration(Math.abs(i - currentIndex) * animationSpeed);
-        currentIndex = i;
         imageView.startAnimation(animation);
+        currentIndex = i;
     }
 
     @Override
