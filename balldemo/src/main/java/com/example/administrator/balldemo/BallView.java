@@ -86,6 +86,7 @@ public class BallView extends View {
         else checkBorder2();
         x += dx;
         y += dy;
+        invalidate();
         // System.out.println("x = " + x);
         // System.out.println("y = " + y);
     }
@@ -131,7 +132,6 @@ public class BallView extends View {
         } else if (isOnBorderBottom()) {
             y = getHeight() - radius - 1;
         }
-
         return this;
     }
 }
