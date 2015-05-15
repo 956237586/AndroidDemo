@@ -49,6 +49,7 @@ public class BallView extends View {
         super.onDraw(canvas);
     }
 
+
     public double getDx() {
         return dx;
     }
@@ -84,7 +85,7 @@ public class BallView extends View {
         else checkBorder2();
         x += dx;
         y += dy;
-        invalidate();
+        //invalidate();
         // System.out.println("width = " + getWidth());
         // System.out.println("height = " + getHeight());
         // System.out.println("x = " + x);

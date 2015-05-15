@@ -1,10 +1,6 @@
 package com.example.administrator.balldemo;
 
 import android.app.Activity;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -12,7 +8,7 @@ import android.os.Message;
 /**
  * old version
  */
-public class MainActivityCopy extends Activity implements SensorEventListener {
+public class MainActivityCopy extends Activity {
     private BallView ball;
     private Handler handler;
 
@@ -20,6 +16,9 @@ public class MainActivityCopy extends Activity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ball = new BallView(this, 50);
+        ball.setDx(8);
+        ball.setDy(8);
+        ball.setLocation(200, 200);
         setContentView(ball);
 
 
@@ -33,23 +32,7 @@ public class MainActivityCopy extends Activity implements SensorEventListener {
             }
         };
 
-        SensorManager sensorManager = (SensorManager)
-                getSystemService(SENSOR_SERVICE);
-        Sensor sensor = sensorManager.getDefaultSensor
-                (Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
         new Thread(new FreshBall()).start();
-    }
-
-    @Override
-    public void onSensorChanged(SensorEvent sensorEvent) {
-        ball.setDx(-2 * sensorEvent.values[0]);
-        ball.setDy(2 * sensorEvent.values[1]);
-    }
-
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int i) {
-
     }
 
     class FreshBall implements Runnable {
@@ -57,7 +40,7 @@ public class MainActivityCopy extends Activity implements SensorEventListener {
         @Override
         public void run() {
             while (true) {
-                ball.move(false);
+                ball.move(true);
                 Message fresh = new Message();
                 fresh.what = 1;
                 handler.sendMessage(fresh);

@@ -10,7 +10,6 @@ import android.os.Bundle;
 
 public class MainActivity extends Activity implements SensorEventListener {
     private BallView ball;
-    //   private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
