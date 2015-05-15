@@ -24,7 +24,6 @@ public class BallView extends View {
         super(context);
         paint.setColor(Color.BLACK);
         paint.setStyle(Paint.Style.FILL);
-
     }
 
     public BallView(Context context, int radius) {
@@ -34,8 +33,8 @@ public class BallView extends View {
 
     public BallView(Context context, int radius, double step) {
         this(context, radius);
-        this.dx = step * Math.cos(Math.PI / 4);
-        this.dy = step * Math.sin(Math.PI / 4);
+        this.dx = Math.abs(step) * Math.cos(Math.PI / 4) + 1;
+        this.dy = Math.abs(step) * Math.sin(Math.PI / 4) + 1;
     }
 
     public BallView(Context context, int radius, double dx, double dy) {
@@ -67,8 +66,8 @@ public class BallView extends View {
     }
 
     public void setLocation(int x, int y) {
-        this.x = x - radius;
-        this.y = y - radius;
+        this.x = x;
+        this.y = y;
     }
 
     public int getRadius() {
@@ -80,17 +79,23 @@ public class BallView extends View {
     }
 
     public void move(boolean a) {
-        //System.out.println("width = " + getWidth());
-        // System.out.println("height = " + getHeight());
+
         if (a) checkBorder1();
         else checkBorder2();
         x += dx;
         y += dy;
         invalidate();
+        // System.out.println("width = " + getWidth());
+        // System.out.println("height = " + getHeight());
         // System.out.println("x = " + x);
         // System.out.println("y = " + y);
     }
 
+    public void move(boolean a, double dx, double dy) {
+        this.dx = dx;
+        this.dy = dy;
+        move(a);
+    }
 
     public boolean isOnBorderLeft() {
         return x - radius <= 0;

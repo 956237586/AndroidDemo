@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/balldemo" />
             <option value="$PROJECT_DIR$/logindemo" />
+            <option value="$PROJECT_DIR$/pagerdemo" />
           </set>
         </option>
       </GradleProjectSettings>
